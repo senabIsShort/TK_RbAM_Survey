@@ -1,0 +1,188 @@
+body {
+  font-family: Arial;
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem;
+}
+
+label,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+button {
+  margin: 1.5rem auto 0;
+  padding: 0.6rem 1.2rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  display: block;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav div {
+    display: flex;
+    align-items: center;
+    label {
+        margin-top: unset;
+    }
+    progress {
+      margin: 0 0.5rem;
+    }
+    a {
+        margin-right: 1rem;
+    }
+}
+
+.button {
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 5px;
+  width: fit-content;
+  margin: auto;
+  display: block;
+}
+
+.argument-pair {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.argument {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #eee;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.relation {
+  margin: 0 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  position: relative;
+  background: #007bff;
+  border-radius: 8px;
+  color: white;
+  flex-shrink: 0;
+  width: fit-content;
+  label {
+    margin-top: 0;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.relation::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -19px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #007bff;
+}
+
+.relation select {
+  background: white;
+  color: #333;
+  border: 2px solid white;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+/* Color variants for different relationship types */
+.relation.support {
+  background: #28a745;
+}
+
+.relation.support::after {
+  border-left-color: #28a745;
+}
+
+.relation.attack {
+  background: #dc3545;
+}
+
+.relation.attack::after {
+  border-left-color: #dc3545;
+}
+
+.relation.neutral {
+  background: #6c757d;
+}
+
+.relation.neutral::after {
+  border-left-color: #6c757d;
+}
+
+.argument pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: inherit;
+  margin: 0;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.rating-section {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #eee;
+  border-radius: 8px;
+}
+
+.rating-group {
+  margin-bottom: 1rem;
+}
+
+.rating-group:last-child {
+  margin-bottom: 0;
+}
+
+.rating-group > label {
+  display: block;
+  margin: 0 0 0.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-weight: normal;
+  cursor: pointer;
+  width: auto;
+}
+
+.radio-group input[type="radio"] {
+  margin-right: 0.3rem;
+  width: auto;
+}

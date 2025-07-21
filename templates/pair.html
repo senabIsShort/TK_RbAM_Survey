@@ -1,0 +1,76 @@
+{% extends "index.html" %}
+
+{% block title %}Argument Relationship Annotation{% endblock %}
+{% block content %}
+  <h2>Evaluate the relationship from the SOURCE to the TARGET arguments</h2>
+
+  <form method="POST" action="/submit">
+    <div class="argument-pair">
+      
+      <div class="argument">
+      <strong>[SOURCE] Argument:</strong>
+      <p>{{ pair.argSrc }}</p>
+      <input type="hidden" name="argSrc" value="{{ pair.argSrc }}">
+      </div>
+      
+      <div class="relation">
+        <label for="relation">Relationship:</label>
+        <select name="relation" required>
+          <option value="">-- Choose --</option>
+          <option value="support">Support</option>
+          <option value="attack">Attack</option>
+          <option value="neutral">Neutral</option>
+        </select>
+      </div>
+
+      <div class="argument">
+        <strong>[TARGET] Argument:</strong>
+        <p>{{ pair.argTrg }}</p>
+        <input type="hidden" name="argTrg" value="{{ pair.argTrg }}">
+      </div>
+    </div>
+
+    {% if show_reasoning %}
+    <div class="argument">
+      <strong>Reasoning:</strong>
+      <pre>{{ pair.completion }}</pre>
+      <input type="hidden" name="reasoning" value="{{ pair.completion }}">
+    </div>
+
+    <div class="rating-section">
+      <div class="rating-group">
+        <label>How clear is this reasoning? (1 = Very unclear, 5 = Very clear)</label>
+        <div class="radio-group">
+          <label><input type="radio" name="clarity" value="1" required> 1</label>
+          <label><input type="radio" name="clarity" value="2"> 2</label>
+          <label><input type="radio" name="clarity" value="3"> 3</label>
+          <label><input type="radio" name="clarity" value="4"> 4</label>
+          <label><input type="radio" name="clarity" value="5"> 5</label>
+        </div>
+      </div>
+
+      <div class="rating-group">
+        <label>How helpful is this reasoning? (1 = Not helpful, 5 = Very helpful)</label>
+        <div class="radio-group">
+          <label><input type="radio" name="helpfulness" value="1" required> 1</label>
+          <label><input type="radio" name="helpfulness" value="2"> 2</label>
+          <label><input type="radio" name="helpfulness" value="3"> 3</label>
+          <label><input type="radio" name="helpfulness" value="4"> 4</label>
+          <label><input type="radio" name="helpfulness" value="5"> 5</label>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <input type="hidden" name="reasoning_shown" value="{{ show_reasoning }}">
+
+    <input type="hidden" name="arg_id" value="{{ pair.id }}">
+
+    <label for="comment">Comment (optional):</label>
+    <textarea name="comment" rows="3"></textarea>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+{% endblock %}
+
