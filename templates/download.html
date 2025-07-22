@@ -1,0 +1,16 @@
+{% extends "index.html" %}
+
+{% block title %}Download results!{% endblock %}
+
+{% block content %}
+
+<h2>Please enter the password to download the results.</h2>
+
+<form method="POST" action="/download">
+  <label for="password">Password:</label>
+  <input type="password" name="password" id="password" required>
+  <button type="submit" class="button">Download</button>
+</form>
+
+{% endblock %}
+

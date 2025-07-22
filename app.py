@@ -2,7 +2,9 @@ import csv
 import uuid
 import os
 import pandas as pd
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file, abort
+import zipfile
+import tempfile
 
 app = Flask(__name__)
 
@@ -97,5 +99,35 @@ def thankyou():
 def about():
     return render_template("about.html")
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+@app.route('/download', methods=['GET'])
+def download_page():
+    return render_template("download.html")
+
+@app.route("/download", methods=["POST"])
+def download_file():
+    # Get the password from the password form field
+    provided_password = request.form.get("password")
+    correct_password = os.getenv("DOWNLOAD_PASSWORD")
+
+    if not correct_password:
+        abort(500, "Server misconfigured: DOWNLOAD_PASSWORD is not set.")
+
+    if provided_password != correct_password:
+        abort(403, "Unauthorized: invalid password.")
+    
+    # Create a temporary zip file
+    temp_zip = tempfile.NamedTemporaryFile(delete=False, suffix='.zip')
+    responses_dir = os.path.join(os.getcwd(), 'responses')
+
+    with zipfile.ZipFile(temp_zip.name, 'w', zipfile.ZIP_DEFLATED) as zipf:
+        for root, dirs, files in os.walk(responses_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                arcname = os.path.relpath(file_path, responses_dir)
+                zipf.write(file_path, arcname)
+
+    file_path = temp_zip.name
+    if not os.path.exists(file_path):
+        abort(404, "File not found.")
+
+    return send_file(file_path, as_attachment=True)
