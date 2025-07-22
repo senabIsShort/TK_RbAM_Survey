@@ -23,6 +23,11 @@ button {
   display: block;
 }
 
+button:hover {
+  background: #0056b3;
+  cursor: pointer;
+}
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -52,6 +57,10 @@ nav div {
   width: fit-content;
   margin: auto;
   display: block;
+}
+
+.button:hover {
+  background: #0056b3;
 }
 
 .argument-pair {
