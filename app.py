@@ -15,7 +15,7 @@ if not app.secret_key:
 if not os.path.exists(os.path.join(os.getcwd(), 'responses')):
     os.makedirs(os.path.join(os.getcwd(), 'responses'))
 
-argument_pairs = pd.read_csv('training_dataset-filtered.csv').sample(20).reset_index(drop=True)
+argument_pairs = pd.read_csv('selected_training_dataset-filtered.csv').sample(frac=1).reset_index(drop=True)
 original_pairs = argument_pairs.copy()
 original_pairs['show_reasoning'] = False
 duplicate_pairs = argument_pairs.copy()
@@ -58,7 +58,8 @@ def pair(pair_id : int):
 
 @app.route('/submit', methods=['POST'])
 def submit():
-    relation = request.form['relation']
+    predictedRelation = request.form['predictedRelation']
+    trueRelation = request.form['trueRelation']
     comment = request.form['comment']
     arg_id = request.form['arg_id']
     argSrc = request.form['argSrc']
@@ -75,10 +76,10 @@ def submit():
     if not os.path.exists(output_path):
         with open(output_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
-            writer.writerow(['arg_id', 'argSrc', 'argTrg', 'relation', 'reasoning_shown', 'reasoning', 'clarity', 'helpfulness', 'comment'])
+            writer.writerow(['arg_id', 'argSrc', 'argTrg', 'trueRelation', 'predictedRelation', 'reasoning_shown', 'reasoning', 'clarity', 'helpfulness', 'comment'])
     with open(output_path, 'a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        writer.writerow([arg_id, argSrc, argTrg, relation, reasoning_shown, reasoning, clarity, helpfulness, comment])
+        writer.writerow([arg_id, argSrc, argTrg, trueRelation, predictedRelation, reasoning_shown, reasoning, clarity, helpfulness, comment])
 
     if arg_id == str(session.get('nb_pairs', 0)):
         session['finished'] = True

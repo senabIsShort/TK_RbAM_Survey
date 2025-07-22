@@ -14,13 +14,14 @@
       </div>
       
       <div class="relation">
-        <label for="relation">Relationship:</label>
-        <select name="relation" required>
+        <label for="predictedRelation">Relationship:</label>
+        <select name="predictedRelation" required>
           <option value="">-- Choose --</option>
           <option value="support">Support</option>
           <option value="attack">Attack</option>
           <option value="neutral">Neutral</option>
         </select>
+        <input type="hidden" name="trueRelation" value="{{ pair.relation }}">
       </div>
 
       <div class="argument">
