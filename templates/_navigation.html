@@ -1,6 +1,7 @@
 <nav>
   <div>
     <a href="{{ url_for("index") }}">Homepage</a>
+    <a href="{{ url_for("examples") }}">Examples</a>
     <a href="{{ url_for("about") }}">About</a>
     <a href="{{ url_for("download_page") }}">Download Results</a>
   </div>
@@ -8,9 +9,9 @@
   {% if "nb_pairs" in session and "current_pair_id" in session %}
     <div>
       <label for="survey_progress">Survey progress: </label>
-      <progress id="survey_progress" max="{{ session["nb_pairs"] }}" value="{{ session["current_pair_id"] }}">
+      <progress id="survey_progress" max="{{ session["nb_pairs"]+1 }}" value="{{ session["current_pair_id"]+1 }}">
       </progress>
-      <span>{{ session["current_pair_id"] }}/{{ session["nb_pairs"] }}</span>
+      <span>{{ session["current_pair_id"]+1 }}/{{ session["nb_pairs"]+1 }}</span>
     </div>
   {% endif %}
 </nav>

@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const relationSelect = document.querySelector('select[name="relation"]');
+  const relationSelect = document.querySelector('select[name="predictedRelation"]');
   const relationDiv = document.querySelector(".relation");
 
   relationSelect.addEventListener("change", function () {

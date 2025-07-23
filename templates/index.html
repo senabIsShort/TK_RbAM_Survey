@@ -11,25 +11,7 @@
   </header>
 
   {% block content %}
-  <h2>Evaluate the relationship from the SOURCE to the TARGET arguments.</h2>
-  <p>As part of our research, you'll be tasked to annotate the relationship from one argument to the other. This relationship can be:</p>
-  <ul>
-    <li><strong style="color: #28a745">Support</strong>: The source argument supports the target argument by either providing an example, a fact or a conclusion similar to it.</li>
-    <li><strong style="color: #dc3545">Attack</strong>: The source argument attacks the target argument by either providing counterexamples, counterfacts or a conclusion that contradicts it.</li>
-    <li><strong style="color: #6c757d">Neutral</strong>: The source argument is unrelated to the target argument, it may be discussing a completely different topic or does not either attack or support its claims.</li>
-  </ul>
-  <p>
-    We use a cookie to save your progress so that you may leave and pick up where you left off anytime without needing user authentication. </br>
-    The only data saved to this cookie is a unique ID, the ID of the last question shown and whether you've already completed this survey. </br>
-    If you clear your cookies, you will lose your progress and have to start over.
-  </p>
-  <a href={{ url_for("start") }} class="button">
-    {% if session['uuid'] %}
-      Continue
-    {% else %}
-      Start
-    {% endif %}
-  </a>
+  
   {% endblock %}
 </body>
 </html>

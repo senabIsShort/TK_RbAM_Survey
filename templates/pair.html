@@ -5,12 +5,20 @@
   <h2>Evaluate the relationship from the SOURCE to the TARGET arguments</h2>
 
   <form method="POST" action="/submit">
+    {% if show_reasoning %}
+    <div class="argument">
+      <strong>Reasoning:</strong>
+      <pre>{{ pair.completion }}</pre>
+      <input type="hidden" name="reasoning" value="{{ pair.completion }}">
+    </div>
+    {% endif %}
+    
     <div class="argument-pair">
       
       <div class="argument">
-      <strong>[SOURCE] Argument:</strong>
-      <p>{{ pair.argSrc }}</p>
-      <input type="hidden" name="argSrc" value="{{ pair.argSrc }}">
+        <strong>[TARGET] Argument:</strong>
+        <p>{{ pair.argTrg }}</p>
+        <input type="hidden" name="argTrg" value="{{ pair.argTrg }}">
       </div>
       
       <div class="relation">
@@ -23,24 +31,29 @@
         </select>
         <input type="hidden" name="trueRelation" value="{{ pair.relation }}">
       </div>
-
+      
       <div class="argument">
-        <strong>[TARGET] Argument:</strong>
-        <p>{{ pair.argTrg }}</p>
-        <input type="hidden" name="argTrg" value="{{ pair.argTrg }}">
+        <strong>[SOURCE] Argument:</strong>
+        <p>{{ pair.argSrc }}</p>
+        <input type="hidden" name="argSrc" value="{{ pair.argSrc }}">
       </div>
-    </div>
-
-    {% if show_reasoning %}
-    <div class="argument">
-      <strong>Reasoning:</strong>
-      <pre>{{ pair.completion }}</pre>
-      <input type="hidden" name="reasoning" value="{{ pair.completion }}">
     </div>
 
     <div class="rating-section">
       <div class="rating-group">
-        <label>How clear is this reasoning? (1 = Very unclear, 5 = Very clear)</label>
+        <label>How confident are you in your choice?</label>
+        <div class="radio-group">
+          <label><input type="radio" name="confidence" value="1" required> Low</label>
+          <label><input type="radio" name="confidence" value="2"> Medium</label>
+          <label><input type="radio" name="confidence" value="3"> High</label>
+        </div>
+      </div>
+    </div>
+
+    {% if show_reasoning %}
+    <div class="rating-section">
+      <div class="rating-group">
+        <label>How clear is this reasoning? (1 = Confusing, 3 = Neutral, 5 = Clear)</label>
         <div class="radio-group">
           <label><input type="radio" name="clarity" value="1" required> 1</label>
           <label><input type="radio" name="clarity" value="2"> 2</label>
@@ -51,7 +64,7 @@
       </div>
 
       <div class="rating-group">
-        <label>How helpful is this reasoning? (1 = Not helpful, 5 = Very helpful)</label>
+        <label>How helpful is this reasoning? (1 = Unhelpful, 3 = Neutral, 5 = Helpful)</label>
         <div class="radio-group">
           <label><input type="radio" name="helpfulness" value="1" required> 1</label>
           <label><input type="radio" name="helpfulness" value="2"> 2</label>
