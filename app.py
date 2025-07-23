@@ -19,7 +19,9 @@ if not os.path.exists(os.path.join(os.getcwd(), 'responses')):
     os.makedirs(os.path.join(os.getcwd(), 'responses'))
 
 argument_pairs = pd.read_csv('selected_training_dataset-filtered.csv').sample(frac=1)
-argument_pairs = argument_pairs.groupby('relation').head(7).reset_index(drop=True)
+argument_pairs = argument_pairs.groupby('relation').head(7)
+argument_pairs = argument_pairs.reset_index(drop=True)
+
 original_pairs = argument_pairs.copy()
 original_pairs['show_reasoning'] = False
 duplicate_pairs = argument_pairs.copy()
@@ -31,8 +33,8 @@ for i, row in original_pairs.iterrows():
     interleaved_pairs.append(duplicate_pairs.iloc[i])
 argument_pairs = pd.DataFrame(interleaved_pairs, index=None).reset_index(drop=True)
 argument_pairs['id'] = argument_pairs.index
+print(argument_pairs[['argSrc', 'argTrg', 'show_reasoning']])
 argument_pairs = argument_pairs.to_dict(orient='records')
-
 @app.route('/')
 def index():
     session.permanent = True  # Session expires after 31 days by default and refreshes on each request
@@ -64,18 +66,28 @@ def start():
 def pair(pair_id : int):
     if 'uuid' not in session or 'current_pair_id' not in session:
         return redirect('/')
-    else:
-        pair =  argument_pairs[pair_id]
-        show_reasoning = pair['show_reasoning']
+    
+    is_done = session.get('finished', False)
+    if is_done:
+        return redirect('/thankyou')
+    if pair_id!= session['current_pair_id']:
+        return redirect(url_for('pair', pair_id=session['current_pair_id']))
+    
+    pair =  argument_pairs[pair_id]
+    show_reasoning = pair['show_reasoning']
     return render_template("pair.html", pair=pair, show_reasoning=show_reasoning)
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    arg_id = request.form['arg_id']
+
+    if int(arg_id) != session['current_pair_id']:
+        return redirect(url_for('pair', pair_id=session['current_pair_id']))
+
     predictedRelation = request.form['predictedRelation']
     trueRelation = request.form['trueRelation']
     confidence = int(request.form['confidence'])
     comment = request.form['comment']
-    arg_id = request.form['arg_id']
     argSrc = request.form['argSrc']
     argTrg = request.form['argTrg']
     reasoning_shown = request.form.get('reasoning_shown', 'False') == 'True'
