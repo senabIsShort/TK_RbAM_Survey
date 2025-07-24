@@ -19,8 +19,7 @@ if not os.path.exists(os.path.join(os.getcwd(), 'responses')):
     os.makedirs(os.path.join(os.getcwd(), 'responses'))
 
 argument_pairs = pd.read_csv('selected_training_dataset-filtered.csv').sample(frac=1)
-argument_pairs = argument_pairs.groupby('relation').head(7)
-argument_pairs = argument_pairs.reset_index(drop=True)
+argument_pairs = argument_pairs.groupby('relation').head(7).reset_index(drop=True)
 
 original_pairs = argument_pairs.copy()
 original_pairs['show_reasoning'] = False
@@ -33,6 +32,7 @@ for i, row in original_pairs.iterrows():
     interleaved_pairs.append(duplicate_pairs.iloc[i])
 argument_pairs = pd.DataFrame(interleaved_pairs, index=None).reset_index(drop=True)
 argument_pairs['id'] = argument_pairs.index
+print(argument_pairs[['id', 'relation', 'argSrc', 'argTrg', 'show_reasoning']])
 
 argument_pairs = argument_pairs.to_dict(orient='records')
 @app.route('/')
