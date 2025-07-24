@@ -31,7 +31,7 @@ for i, row in original_pairs.iterrows():
     interleaved_pairs.append(duplicate_pairs.iloc[i])
 argument_pairs = pd.DataFrame(interleaved_pairs, index=None).reset_index(drop=True)
 argument_pairs['id'] = argument_pairs.index
-print(argument_pairs[['id', 'relation', 'argSrc', 'argTrg', 'show_reasoning']])
+print(argument_pairs[['argSrc', 'show_reasoning']])
 
 argument_pairs = argument_pairs.to_dict(orient='records')
 @app.route('/')
