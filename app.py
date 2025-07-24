@@ -18,7 +18,8 @@ if not app.secret_key:
 if not os.path.exists(os.path.join(os.getcwd(), 'responses')):
     os.makedirs(os.path.join(os.getcwd(), 'responses'))
 
-argument_pairs = pd.read_csv('selected_training_dataset-filtered-smaller.csv').sample(frac=1).reset_index(drop=True)
+argument_pairs = pd.read_csv('selected_training_dataset-filtered.csv').sample(frac=1)
+argument_pairs = argument_pairs.groupby('relation').head(7).reset_index(drop=True)
 
 original_pairs = argument_pairs.copy()
 original_pairs['show_reasoning'] = False
@@ -31,9 +32,9 @@ for i, row in original_pairs.iterrows():
     interleaved_pairs.append(duplicate_pairs.iloc[i])
 argument_pairs = pd.DataFrame(interleaved_pairs, index=None).reset_index(drop=True)
 argument_pairs['id'] = argument_pairs.index
-print(argument_pairs[['argSrc', 'show_reasoning']])
 
 argument_pairs = argument_pairs.to_dict(orient='records')
+
 @app.route('/')
 def index():
     session.permanent = True  # Session expires after 31 days by default and refreshes on each request
@@ -71,8 +72,8 @@ def pair(pair_id : int):
         return redirect('/thankyou')
     if pair_id!= session['current_pair_id']:
         return redirect(url_for('pair', pair_id=session['current_pair_id']))
-    
-    pair =  argument_pairs[pair_id]
+
+    pair =  [row for row in argument_pairs if row['id'] == pair_id][0]
     show_reasoning = pair['show_reasoning']
     return render_template("pair.html", pair=pair, show_reasoning=show_reasoning)
 
