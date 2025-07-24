@@ -18,8 +18,7 @@ if not app.secret_key:
 if not os.path.exists(os.path.join(os.getcwd(), 'responses')):
     os.makedirs(os.path.join(os.getcwd(), 'responses'))
 
-argument_pairs = pd.read_csv('selected_training_dataset-filtered.csv').sample(frac=1)
-argument_pairs = argument_pairs.groupby('relation').head(7).reset_index(drop=True)
+argument_pairs = pd.read_csv('selected_training_dataset-filtered-smaller.csv').sample(frac=1).reset_index(drop=True)
 
 original_pairs = argument_pairs.copy()
 original_pairs['show_reasoning'] = False
