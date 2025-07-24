@@ -32,22 +32,85 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
-nav div {
+.nav-div {
     display: flex;
     align-items: center;
-    label {
-        margin-top: unset;
-        width: fit-content;
-    }
-    progress {
-      margin: 0 0.5rem;
-      width: 100%;;
-    }
-    a {
-        margin-right: 1rem;
-    }
+}
+
+.burger-menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: auto;
+}
+
+.burger-menu:hover {
+    background: none;
+}
+
+.burger-line {
+    width: 25px;
+    height: 3px;
+    background: #333;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.nav-links a {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    text-decoration: none;
+    color: #333;
+    border-bottom: 1px solid #eee;
+  }
+
+.nav-links a:hover {
+  background: #f8f9fa;
+}
+
+.nav-progress {
+    display: flex;
+    align-items: center;
+}
+
+.nav-progress label {
+    margin-top: unset;
+    width: fit-content;
+}
+
+.nav-progress progress {
+    margin: 0 0.5rem;
+    width: 100px;
+}
+
+.nav-progress {
+    display: flex;
+    align-items: center;
+}
+
+.nav-progress label {
+    margin-top: unset;
+    width: fit-content;
+}
+
+.nav-progress progress {
+    margin: 0 0.5rem;
+    width: 100px;
 }
 
 .button {
@@ -234,6 +297,56 @@ nav div {
 }
 
 @media(max-width: 784px) {
+  .burger-menu {
+    display: flex;
+  }
+  
+  .nav-links {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    flex-direction: column;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  
+  .nav-links.active {
+    display: flex;
+  }
+  
+  .nav-progress {
+    flex-shrink: 0;
+  }
+  
+  .nav-progress progress {
+    width: 80px;
+  }
+  
+  .nav-progress label {
+    font-size: 0.9rem;
+  }
+  
+  .nav-progress span {
+    font-size: 0.9rem;
+  }
+  
+  .burger-menu.active .burger-line:nth-child(1) {
+    transform: translateY(10px) rotate(45deg);
+  }
+  
+  .burger-menu.active .burger-line:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .burger-menu.active .burger-line:nth-child(3) {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
   .argument-pair {
     flex-direction: column;
     align-items: unset;
@@ -265,6 +378,21 @@ nav div {
   }
 
   .relation.neutral::after {
+    border-bottom-color: #6c757d;
+    border-right-color: transparent;
+  }
+  
+  .relation.support-fixed::after {
+    border-bottom-color: #28a745;
+    border-right-color: transparent;
+  }
+
+  .relation.attack-fixed::after {
+    border-bottom-color: #dc3545;
+    border-right-color: transparent;
+  }
+
+  .relation.neutral-fixed::after {
     border-bottom-color: #6c757d;
     border-right-color: transparent;
   }

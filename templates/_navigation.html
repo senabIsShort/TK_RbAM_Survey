@@ -1,13 +1,20 @@
 <nav>
-  <div>
-    <a href="{{ url_for("index") }}">Homepage</a>
-    <a href="{{ url_for("examples") }}">Examples</a>
-    {# <a href="{{ url_for("about") }}">About</a> #}
-    <a href="{{ url_for("download_page") }}">Download Results</a>
+  <div class="nav-left">
+    <button class="burger-menu" id="burger-menu" aria-label="Toggle navigation menu">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="{{ url_for("index") }}">Homepage</a>
+      <a href="{{ url_for("examples") }}">Examples</a>
+      {# <a href="{{ url_for("about") }}">About</a> #}
+      <a href="{{ url_for("download_page") }}">Download Results</a>
+    </div>
   </div>
 
   {% if "nb_pairs" in session and "current_pair_id" in session %}
-    <div>
+    <div class="nav-progress">
       <label for="survey_progress">Survey progress: </label>
       <progress id="survey_progress" max="{{ session["nb_pairs"]+1 }}" value="{{ session["current_pair_id"]+1 }}">
       </progress>
