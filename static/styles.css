@@ -39,9 +39,11 @@ nav div {
     align-items: center;
     label {
         margin-top: unset;
+        width: fit-content;
     }
     progress {
       margin: 0 0.5rem;
+      width: 100%;;
     }
     a {
         margin-right: 1rem;
@@ -229,4 +231,41 @@ nav div {
 
 .example_explanation {
   margin: 0 1rem 1rem;
+}
+
+@media(max-width: 784px) {
+  .argument-pair {
+    flex-direction: column;
+    align-items: unset;
+  }
+  
+  .relation {
+    width: inherit;
+    margin: 0 0 1rem;
+  }
+
+  .relation::after {
+    top: -19px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid #007bff;
+    border-top: none;
+  }
+
+  .relation.support::after {
+    border-bottom-color: #28a745;
+    border-right-color: transparent;
+  }
+
+  .relation.attack::after {
+    border-bottom-color: #dc3545;
+    border-right-color: transparent;
+  }
+
+  .relation.neutral::after {
+    border-bottom-color: #6c757d;
+    border-right-color: transparent;
+  }
 }

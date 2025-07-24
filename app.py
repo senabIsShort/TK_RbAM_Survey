@@ -33,7 +33,7 @@ for i, row in original_pairs.iterrows():
     interleaved_pairs.append(duplicate_pairs.iloc[i])
 argument_pairs = pd.DataFrame(interleaved_pairs, index=None).reset_index(drop=True)
 argument_pairs['id'] = argument_pairs.index
-print(argument_pairs[['argSrc', 'argTrg', 'show_reasoning']])
+
 argument_pairs = argument_pairs.to_dict(orient='records')
 @app.route('/')
 def index():
@@ -119,9 +119,9 @@ def submit():
 def thankyou():
     return render_template("thankyou.html")
 
-@app.route('/about', methods=['GET'])
-def about():
-    return render_template("about.html")
+# @app.route('/about', methods=['GET'])
+# def about():
+#     return render_template("about.html")
 
 @app.route('/download', methods=['GET'])
 def download_page():
